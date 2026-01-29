@@ -8,7 +8,6 @@ const TaskForm = ({ show, onClose, onSuccess, task }) => {
     status: "pending",
     due_date: "",
   });
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -19,8 +18,15 @@ const TaskForm = ({ show, onClose, onSuccess, task }) => {
         status: task.status,
         due_date: task.due_date || "",
       });
+    } else {
+      setFormData({
+        title: "",
+        description: "",
+        status: "pending",
+        due_date: "",
+      });
     }
-  }, [task]);
+  }, [task, show]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,14 +35,13 @@ const TaskForm = ({ show, onClose, onSuccess, task }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       if (task) {
         await api.put(`tasks/${task.id}/`, formData);
       } else {
         await api.post("tasks/", formData);
       }
-      onSuccess();
+      onSuccess(); // refresh list
       onClose();
     } catch {
       alert("Failed to save task");
@@ -48,15 +53,13 @@ const TaskForm = ({ show, onClose, onSuccess, task }) => {
   if (!show) return null;
 
   return (
-    <div className="modal d-block bg-dark bg-opacity-50">
+    <div className="modal d-block bg-dark bg-opacity-50" tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+        <div className="modal-content shadow">
           <form onSubmit={handleSubmit}>
             <div className="modal-header">
-              <h5 className="modal-title">
-                {task ? "Edit Task" : "Add Task"}
-              </h5>
-              <button type="button" className="btn-close" onClick={onClose} />
+              <h5 className="modal-title">{task ? "Edit Task" : "Add Task"}</h5>
+              <button type="button" className="btn-close" onClick={onClose}></button>
             </div>
 
             <div className="modal-body">
@@ -83,7 +86,7 @@ const TaskForm = ({ show, onClose, onSuccess, task }) => {
               </div>
 
               <div className="row">
-                <div className="col">
+                <div className="col mb-3">
                   <label className="form-label">Status</label>
                   <select
                     name="status"
@@ -97,7 +100,7 @@ const TaskForm = ({ show, onClose, onSuccess, task }) => {
                   </select>
                 </div>
 
-                <div className="col">
+                <div className="col mb-3">
                   <label className="form-label">Due Date</label>
                   <input
                     type="date"
@@ -111,11 +114,11 @@ const TaskForm = ({ show, onClose, onSuccess, task }) => {
             </div>
 
             <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={onClose}>
+              <button type="button" className="btn btn-secondary" onClick={onClose}>
                 Cancel
               </button>
-              <button className="btn btn-primary" disabled={loading}>
-                {loading ? "Saving..." : "Save"}
+              <button type="submit" className="btn btn-primary" disabled={loading}>
+                {loading ? "Saving..." : "Save Task"}
               </button>
             </div>
           </form>

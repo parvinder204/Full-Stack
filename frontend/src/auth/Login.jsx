@@ -5,86 +5,65 @@ import { setTokens } from "../utils/auth";
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
-
+    setError("");
     try {
       const response = await api.post("auth/login/", {
-        username: formData.email,
-        password: formData.password,
+        username: form.email,
+        password: form.password,
       });
-
       setTokens(response.data.access, response.data.refresh);
       navigate("/");
-    } catch (err) {
-      setError("Invalid email or password");
+    } catch {
+      setError("Invalid credentials");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100">
-      <div className="card shadow-sm p-4" style={{ width: "400px" }}>
-        <h4 className="text-center mb-3">Login</h4>
-
+    <div className="d-flex justify-content-center align-items-center min-vh-100">
+      <div className="card p-4 shadow" style={{ width: "400px", backgroundColor: "#1f1f1f" }}>
+        <h3 className="text-center mb-3 text-white">Login</h3>
         {error && <div className="alert alert-danger">{error}</div>}
-
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Email</label>
+            <label className="form-label text-white">Email</label>
             <input
-              type="email"
               name="email"
+              type="email"
               className="form-control"
-              value={formData.email}
+              value={form.email}
               onChange={handleChange}
               required
             />
           </div>
-
           <div className="mb-3">
-            <label className="form-label">Password</label>
+            <label className="form-label text-white">Password</label>
             <input
-              type="password"
               name="password"
+              type="password"
               className="form-control"
-              value={formData.password}
+              value={form.password}
               onChange={handleChange}
               required
             />
           </div>
-
-          <button
-            type="submit"
-            className="btn btn-primary w-100"
-            disabled={loading}
-          >
+          <button className="btn btn-primary w-100" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-
-        <div className="text-center mt-3">
+        <div className="text-center mt-3 text-white">
           <small>
-            Don’t have an account? <Link to="/register">Register</Link>
+            No account? <Link to="/register" className="text-info">Register</Link>
           </small>
         </div>
       </div>

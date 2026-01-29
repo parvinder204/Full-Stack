@@ -10,11 +10,21 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-dark bg-dark px-3">
-      <span className="navbar-brand">Task Manager</span>
-      <button className="btn btn-outline-light btn-sm" onClick={handleLogout}>
-        Logout
+    <nav className="navbar navbar-expand-lg navbar-grey px-4">
+      <a className="navbar-brand" href="/">Task Manager</a>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+      >
+        <span className="navbar-toggler-icon"></span>
       </button>
+      <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <button className="btn btn-outline-light" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
     </nav>
   );
 };

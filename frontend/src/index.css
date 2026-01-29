@@ -1,11 +1,22 @@
 body {
-  background-color: #f8f9fa;
+  background-color: #f1f5f9;
 }
 
 .card {
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 button {
   border-radius: 6px;
+}
+
+.modal .modal-content {
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  .row > .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
