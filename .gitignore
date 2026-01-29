@@ -1,0 +1,86 @@
+# ================================
+# Python / Django
+# ================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+
+# Django specific
+*.log
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+
+# Environment variables
+.env
+.env.*
+*.env
+
+# ================================
+# Virtual Environment
+# ================================
+venv/
+env/
+ENV/
+.venv/
+.python-version
+
+# ================================
+# Python build / packaging
+# ================================
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# ================================
+# Node / React
+# ================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# React build output
+build/
+dist/
+
+# ================================
+# React / Vite / CRA env
+# ================================
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ================================
+# IDE / Editor
+# ================================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ================================
+# OS files
+# ================================
+.DS_Store
+Thumbs.db
+
+# ================================
+# Coverage / Testing
+# ================================
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ================================
+# Logs
+# ================================
+logs/
