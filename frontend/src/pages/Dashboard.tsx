@@ -56,17 +56,6 @@ const Dashboard: React.FC = () => {
     }
   };
 
-//   const handleDeleteTask = async (id: number) => {
-//     if (window.confirm('Are you sure you want to delete this task?')) {
-//       try {
-//         await deleteTask(id);
-//         setSuccessMessage('Task deleted successfully!');
-//         setTimeout(() => setSuccessMessage(''), 3000);
-//       } catch (err) {
-//         console.error('Error deleting task:', err);
-//       }
-//     }
-//   };
 
   const handleDeleteClick = (task: Task) => {
   setTaskToDelete(task);
@@ -191,12 +180,6 @@ const confirmDeleteTask = async () => {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
               {tasks.map((task) => (
-                // <TaskCard
-                //   key={task.id}
-                //   task={task}
-                //   onEdit={handleEditClick}
-                //   onDelete={handleDeleteTask}
-                // />
                 <TaskCard
                     key={task.id}
                     task={task}
