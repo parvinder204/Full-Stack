@@ -37,7 +37,7 @@ python manage.py runserver
 ```bash
 cd frontend
 npm install
-npm dev
+npm run dev
 
 ---
 
