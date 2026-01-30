@@ -8,12 +8,12 @@ A full-stack task management application built using Django REST Framework and R
 - Task Status Filtering
 - Pagination
 - Auto Refresh Token Handling
-- Responsive UI using Bootstrap
+- Responsive UI using Tailwind
 - Dockerized Setup
 
 ## 🛠 Tech Stack
 **Backend:** Django, DRF, JWT  
-**Frontend:** React (Hooks), Bootstrap  
+**Frontend:** React (Hooks), Tailwind  
 **Database:** SQLite / PostgreSQL  
 **Auth:** JWT (Access + Refresh Tokens)  
 **Containerization:** Docker
