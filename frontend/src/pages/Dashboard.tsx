@@ -7,7 +7,9 @@ import Modal from '../components/Modal';
 import Button from '../components/Button';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Alert from '../components/Alert';
+import ConfirmModal from '../components/ConfirmModal';
 import { Plus, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
+
 
 const Dashboard: React.FC = () => {
   const {
@@ -27,6 +29,8 @@ const Dashboard: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | undefined>(undefined);
   const [successMessage, setSuccessMessage] = useState('');
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
   const handleCreateTask = async (data: TaskFormData) => {
     try {
@@ -52,17 +56,37 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const handleDeleteTask = async (id: number) => {
-    if (window.confirm('Are you sure you want to delete this task?')) {
-      try {
-        await deleteTask(id);
-        setSuccessMessage('Task deleted successfully!');
-        setTimeout(() => setSuccessMessage(''), 3000);
-      } catch (err) {
-        console.error('Error deleting task:', err);
-      }
-    }
-  };
+//   const handleDeleteTask = async (id: number) => {
+//     if (window.confirm('Are you sure you want to delete this task?')) {
+//       try {
+//         await deleteTask(id);
+//         setSuccessMessage('Task deleted successfully!');
+//         setTimeout(() => setSuccessMessage(''), 3000);
+//       } catch (err) {
+//         console.error('Error deleting task:', err);
+//       }
+//     }
+//   };
+
+  const handleDeleteClick = (task: Task) => {
+  setTaskToDelete(task);
+  setIsDeleteModalOpen(true);
+};
+
+const confirmDeleteTask = async () => {
+  if (!taskToDelete) return;
+
+  try {
+    await deleteTask(taskToDelete.id);
+    setSuccessMessage('Task deleted successfully!');
+    setTimeout(() => setSuccessMessage(''), 3000);
+  } catch (err) {
+    console.error('Error deleting task:', err);
+  } finally {
+    setIsDeleteModalOpen(false);
+    setTaskToDelete(null);
+  }
+};
 
   const handleEditClick = (task: Task) => {
     setEditingTask(task);
@@ -167,12 +191,18 @@ const Dashboard: React.FC = () => {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
               {tasks.map((task) => (
+                // <TaskCard
+                //   key={task.id}
+                //   task={task}
+                //   onEdit={handleEditClick}
+                //   onDelete={handleDeleteTask}
+                // />
                 <TaskCard
-                  key={task.id}
-                  task={task}
-                  onEdit={handleEditClick}
-                  onDelete={handleDeleteTask}
-                />
+                    key={task.id}
+                    task={task}
+                    onEdit={handleEditClick}
+                    onDelete={() => handleDeleteClick(task)}
+                    />
               ))}
             </div>
 
@@ -219,6 +249,14 @@ const Dashboard: React.FC = () => {
             onCancel={handleCloseModal}
           />
         </Modal>
+        <ConfirmModal
+            isOpen={isDeleteModalOpen}
+            message={`Are you sure you want to delete "${taskToDelete?.title}"?`}
+            onCancel={() => setIsDeleteModalOpen(false)}
+            onConfirm={confirmDeleteTask}
+            confirmText="Delete"
+            cancelText="Cancel"
+            />
       </div>
     </div>
   );
